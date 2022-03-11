@@ -1,11 +1,16 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
+
 const stripe = require("stripe")(
   "sk_test_51JwvitJSSyNgmcbH3IzDtzpeHeiYCQki89HL3JSC6gwBIN6Edwxd2l11pQhG6TFRUY21FMSKorymjUjgJcDWKHmb004v8Zxbqq"
 );
+
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: true }));
+app.use(express.static(path.join(__dirname, "public")));
+
 app.post("/payments/create", async (req, res) => {
   const total = req.body.total;
   if (total > 0) {
